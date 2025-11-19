@@ -1,7 +1,23 @@
 import { useState } from 'react'
 import './App.css'
 
-const API_URL = 'http://localhost:3001/api/download';
+// Use relative URLs in production, localhost in development
+const getApiUrl = () => {
+  if (import.meta.env.PROD) {
+    return '/api/download';
+  }
+  return 'http://localhost:3001/api/download';
+};
+
+const getProxyUrl = () => {
+  if (import.meta.env.PROD) {
+    return '/api/proxy';
+  }
+  return 'http://localhost:3001/api/proxy';
+};
+
+const API_URL = getApiUrl();
+const PROXY_URL = getProxyUrl();
 
 function App() {
   const [url, setUrl] = useState('');
@@ -51,7 +67,7 @@ function App() {
       }
       
       // Use backend proxy to bypass CORS
-      const proxyUrl = `http://localhost:3001/api/proxy?url=${encodeURIComponent(videoUrl)}`;
+      const proxyUrl = `${PROXY_URL}?url=${encodeURIComponent(videoUrl)}`;
       
       // Fetch the video as a blob through the proxy
       const response = await fetch(proxyUrl);
