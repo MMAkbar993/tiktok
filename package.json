@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "TikTok Video Downloader",
   "scripts": {
-    "build": "cd frontend && npm install && npm run build"
+    "build": "node init && cd frontend && npm install && npm run build"
   }
 }
-
